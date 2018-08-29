@@ -74,7 +74,7 @@ era5.temp.rh.wind.extract <- function(latitude, longitude, date.start, date.end)
            plot.night = case_when(
              time %in% c("00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00") ~ round.date-1, TRUE ~ round.date)) %>%
     filter(time %in% c("19:00", "20:00", "21:00", "22:00", "23:00", "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00")) %>%
-    select(seq.years, time, plot.night, t2m, rh180, tp, wd180, ws180) %>%
+    dplyr::select(seq.years, time, plot.night, t2m, rh180, tp, wd180, ws180) %>%
     mutate(u.wind=-ws180 * sin(2 * pi * wd180/360), #from https://www.researchgate.net/profile/Stuart_Grange2/publication/262766424_Technical_note_Averaging_wind_speeds_and_directions/links/54f6184f0cf27d8ed71d5bd4/Technical-note-Averaging-wind-speeds-and-directions.pdf
            v.wind=-ws180 * cos(2 * pi * wd180/360)) %>%
     group_by(plot.night) %>%
@@ -85,7 +85,7 @@ era5.temp.rh.wind.extract <- function(latitude, longitude, date.start, date.end)
               cum.tp = sum(tp)) %>%
     mutate(latitude=latitude,
            longitude=longitude) %>%
-    select(plot.night, latitude, longitude, mean.t2m, mean.rh180, cum.tp, wd.average, scalar.mean.ws.180)
+    dplyr::select(plot.night, latitude, longitude, mean.t2m, mean.rh180, cum.tp, wd.average, scalar.mean.ws.180)
   return(df)
   closeAllConnections()
 }
