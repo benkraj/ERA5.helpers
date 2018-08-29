@@ -15,18 +15,17 @@ era5.temp.rh.wind.extract <- function(latitude, longitude, date.start, date.end)
   require(ncdf4)
   require(ncdf4.helpers)
   require(ncdump)
-  require(plyr)
   require(tidyverse)
   require(lubridate)
   
   #single level extraction
-  t2m <- ldply(list.files(pattern="t2m_"), 
+  t2m <- map_df(list.files(pattern="t2m_"), 
                era5extractsingle, 
                variable="t2m", 
                lat=latitude, long=longitude)
   colnames(t2m) <- c("t2m")
   
-  tp <- ldply(list.files(pattern="tp_"), 
+  tp <- map_df(list.files(pattern="tp_"), 
               era5extractsingle, 
               variable="tp", 
               lat=latitude, long=longitude)
@@ -34,7 +33,7 @@ era5.temp.rh.wind.extract <- function(latitude, longitude, date.start, date.end)
   
   
   #multi-level extraction
-  rh <- ldply(list.files(pattern="rh_"), 
+  rh <- map_df(list.files(pattern="rh_"), 
               era5multilevel, 
               variable="RH", 
               lat=latitude, long=longitude)
@@ -43,7 +42,7 @@ era5.temp.rh.wind.extract <- function(latitude, longitude, date.start, date.end)
   colnames(rh) <- c("rh400", "rh350", "rh300", "rh255", "rh215", 
                     "rh180", "rh145", "rh115", "rh85", "rh55", "rh32", "rh10")
   #Wind Direction
-  wd <- ldply(list.files(pattern="wd_"), 
+  wd <- map_df(list.files(pattern="wd_"), 
               era5multilevel, 
               variable="WD", 
               lat=latitude, long=longitude)
@@ -51,7 +50,7 @@ era5.temp.rh.wind.extract <- function(latitude, longitude, date.start, date.end)
                     "wd32", "wd10")
   
   #Wind Speed
-  ws<- ldply(list.files(pattern="ws_"), 
+  ws<- map_df(list.files(pattern="ws_"), 
              era5multilevel, 
              variable="WS", 
              lat=latitude, long=longitude)
