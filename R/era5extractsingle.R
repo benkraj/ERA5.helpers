@@ -15,8 +15,6 @@ era5extractsingle <- function(file, variable, lat, long) {
   require(ncdf4)
   require(ncdf4.helpers)
   require(ncdump)
-  require(plyr)
-  require(tidyverse)
   #Open Data File, and extract out list of longitudes/latitudes, and Date/Times.
   nc <- nc_open(file)
   latitude.full <- ncvar_get(nc, varid = "latitude")

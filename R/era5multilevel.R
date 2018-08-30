@@ -15,8 +15,7 @@ era5multilevel <- function(file, variable, lat, long) {
   require(ncdf4)
   require(ncdf4.helpers)
   require(ncdump)
-  require(plyr)
-  require(tidyverse)
+
   #Open NetCDF (.nc) format Data File, and extract out list of latitude/longitude within it.
   nc <- nc_open(file)
   latitude.full <- ncvar_get(nc, varid = "lat")
